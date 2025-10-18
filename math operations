@@ -1,0 +1,95 @@
+#include <stdio.h> 
+#include <math.h> 
+
+int main() {
+    int num;
+    int i, is_prime = 1; 
+    long long square, cube;
+    unsigned long long factorial = 1; 
+    double sqrt_val;
+    int temp_num; 
+
+    // 1. Accept the number
+    printf("Enter a positive integer: ");
+    scanf("%d", &num);
+
+    // Basic input validation
+    if (num <= 0) {
+        printf("Error: Please enter a positive integer.\n");
+        return 1; 
+    }
+
+
+
+    // a) Square root of number
+    sqrt_val = sqrt((double)num); // sqrt() takes a double
+    printf("a) Square root of %d: %.2f\n", num, sqrt_val);
+
+    // b) Square of number
+    square = (long long)num * num; // Use long long to avoid overflow
+    printf("b) Square of %d: %lld\n", num, square);
+
+    // c) Cube of number
+    cube = (long long)num * num * num; // Use long long
+    printf("c) Cube of %d: %lld\n", num, cube);
+
+    // d) Check for prime
+    if (num == 1) {
+        is_prime = 0; // 1 is not prime
+    } else if (num == 2) {
+        is_prime = 1; // 2 is prime
+    } else if (num % 2 == 0) {
+        is_prime = 0; // Even numbers > 2 are not prime
+    } else {
+        // Check odd divisors up to the square root
+        for (i = 3; i * i <= num; i += 2) {
+            if (num % i == 0) {
+                is_prime = 0; // Found a divisor
+                break;        // No need to check further
+            }
+        }
+    }
+    printf("d) Is %d prime? %s\n", num, is_prime ? "Yes" : "No");
+
+    // e) Factorial of number
+    // Factorials grow very fast. unsigned long long handles up to 20!
+    if (num > 20) {
+        printf("e) Factorial of %d: Too large to compute (overflows 64-bit integer)\n", num);
+    } else {
+        for (i = 1; i <= num; ++i) {
+            factorial *= i;
+        }
+        printf("e) Factorial of %d: %llu\n", num, factorial);
+    }
+
+    // f) Prime factors
+    printf("f) Prime factors of %d: ", num);
+    temp_num = num;
+
+    if (num == 1) {
+        printf("None");
+    } else {
+        // Check for factors of 2
+        while (temp_num % 2 == 0) {
+            printf("2 ");
+            temp_num /= 2;
+        }
+
+        // Check for odd factors from 3 upwards
+        // We only need to check up to sqrt(temp_num)
+        for (i = 3; i * i <= temp_num; i += 2) {
+            while (temp_num % i == 0) {
+                printf("%d ", i);
+                temp_num /= i;
+            }
+        }
+
+        // If temp_num is still greater than 2, it must be a prime factor itself
+        if (temp_num > 2) {
+            printf("%d", temp_num);
+        }
+    }
+    printf("\n"); // Add a newline at the end
+
+    return 0; // Indicate successful execution
+}
