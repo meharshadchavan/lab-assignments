@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    double mass, velocity, result;
+
+    printf("Enter the mass of the object (in kg): ");
+    scanf("%lf", &mass);
+
+    printf("Enter the velocity of the object (in m/s): ");
+    scanf("%lf", &velocity);
+
+    result = mass * velocity * velocity;
+
+    printf("The calculated result (e = mc^2) is: %lf\n", result);
+
+    return 0;
+}
